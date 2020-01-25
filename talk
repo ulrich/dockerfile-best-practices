@@ -1,0 +1,40 @@
+1. (J) Pesentation du talk
+2. (J) Presentation de l'application
+3. (J) Presentation du Dockerfile d'init
+4. (U) Les problemes sur la partie BACK
+    - On ne respecte pas une des règles d'or des containers, qui est : 1 service par container
+        - On va commencer par travailler sur la conf. mongodb
+            - Creation du folder mongodb
+            - Copy/Past le main/Dockerfile dans le folder mongodb/Dockerfile
+            - Virer du main/Dockerfile les dependences a mongodb
+            - Virer du mongodb/Dockerfile les dependences autres
+            - Modifier la commande de start mongodb
+            - On cree un seul layer pour APT
+            - On clean avec un rm -rf /var/lib/apt/list/* pour reduire la taille de l'image
+            - On se retouve avec une image a deux layers
+            - On peut peut-etre neanmoins se faciliter la vie et voir ce que propose le docker hub
+                - Et si on regarde rapidement ce que fait ce Dockerfile, c'est presque la meme chose
+                - On peut donc utiliser l'image docker hub : FROM mongo:4.0-xenial
+        - On va faire de meme avec la partie serveur
+            - Creation du folder server
+            - Copy/Past le main/Dockerfile dans le folder server/Dockerfile
+            - Virer du main/Dockerfile les dependences a server
+            - Virer du server/Dockerfile les dependences autres
+            - On change le port 80 par 8080
+            - On vire l'appel au script pour utiliser : java -jar
+            - On cree un seul layer pour APT
+            - On clean avec un rm -rf /var/lib/apt/list/* pour reduire la taille de l'image
+            - Encore une fois, le docker hub propose des images plus simple
+                - On va donc utiliser l'image Docker : openjdk:11.0.5-jdk-slim-buster
+            - On modifie le COPY pour utiliser "." au lieu de "server"
+5. (J) Les problemes sur la partie FRONT
+    - Presentation des docker build stage
+6. (U) On va faire la meme chose pour la partie server
+    - Ajouter AS builder pour la partie build
+    - On va utiliser l'image openjdk-11-jre-slim pour l'execution
+    - Il faut ensuite COPY notre JAR builde dans builder et le mettre dans / par exemple 
+
+
+
+
+
